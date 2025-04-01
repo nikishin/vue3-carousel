@@ -1606,13 +1606,6 @@
                         'carousel__slide--next': isNext.value,
                         'carousel__slide--sliding': carousel.isSliding,
                     },
-                    onFocusin: () => {
-                        // Prevent the viewport being scrolled by the focus
-                        if (carousel.viewport) {
-                            carousel.viewport.scrollLeft = 0;
-                        }
-                        carousel.nav.slideTo(currentIndex.value);
-                    },
                     id: props.isClone ? undefined : props.id,
                     'aria-hidden': props.isClone || undefined,
                 }, (_b = slots.default) === null || _b === void 0 ? void 0 : _b.call(slots, {
