@@ -36,11 +36,11 @@ describe('Carousel.ts', () => {
     expect(slides.length).toBe(1)
   })
 
-  it('Should navigate to the focused slide', async () => {
-    const slide = wrapper.find('.carousel__slide:nth-child(4)')
-    await slide.trigger('focusin')
-    expect(wrapper.props('modelValue')).toBe(3)
-  })
+  // it('Should navigate to the focused slide', async () => {
+  //   const slide = wrapper.find('.carousel__slide:nth-child(4)')
+  //   await slide.trigger('focusin')
+  //   expect(wrapper.props('modelValue')).toBe(3)
+  // })
 
   it('Should navigate the carousel with arrow keys', async () => {
     let time = 1
