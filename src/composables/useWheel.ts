@@ -29,8 +29,6 @@ export function useWheel(options: UseWheelOptions) {
   })
 
   const handleScroll = (event: WheelEvent): void => {
-    event.preventDefault()
-
     if (!config.mouseWheel || sliding.value) {
       return
     }
@@ -44,6 +42,14 @@ export function useWheel(options: UseWheelOptions) {
     // Determine scroll direction
     const deltaY = Math.abs(event.deltaY) > threshold ? event.deltaY : 0
     const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0
+
+    // preventDefault if scroll by config axis
+    if (
+      (vertical.value && deltaY >= deltaX)
+      || (!vertical.value && deltaY <= deltaX)
+    ) {
+      event.preventDefault()
+    }
 
     // If neither delta exceeds the threshold, don't navigate
     if (deltaY === 0 && deltaX === 0) {
