@@ -965,6 +965,8 @@ const Carousel = defineComponent({
             onDragEnd,
         });
         const onWheel = ({ deltaX, deltaY, isScrollingForward }) => {
+            // eslint-disable-next-line no-console
+            console.log('onWhell', deltaX, deltaY, isScrollingForward);
             emit('wheel', { deltaX, deltaY });
             if (isScrollingForward) {
                 // Scrolling down/right
