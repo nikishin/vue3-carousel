@@ -483,13 +483,14 @@ function useWheel(options) {
         console.log('Z', vertical.value, Math.abs(deltaY), Math.abs(deltaX));
         // preventDefault if scroll by config axis
         if ((vertical.value && Math.abs(deltaY) < Math.abs(deltaX)) ||
-            (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX))) {
+            (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX)) ||
+            (deltaY === 0 && deltaX === 0)) {
             // eslint-disable-next-line no-console
             console.log('axis.stop', { deltaX, deltaY });
             return;
         }
         // eslint-disable-next-line no-console
-        console.log('whell.go', { deltaX, deltaY });
+        console.log('wheel.go', { deltaX, deltaY });
         event.preventDefault();
         // If neither delta exceeds the threshold, don't navigate
         if (deltaY === 0 && deltaX === 0) {
