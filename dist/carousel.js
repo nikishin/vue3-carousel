@@ -1,6 +1,6 @@
 /**
  * Vue 3 Carousel 0.15.0
- * (c) 2025
+ * (c) 2026
  * @license MIT
  */
 (function (global, factory) {
@@ -471,7 +471,6 @@
         });
         const handleScroll = (event) => {
             var _a, _b;
-            event.preventDefault();
             if (!config.mouseWheel || sliding.value) {
                 return;
             }
@@ -482,6 +481,11 @@
             // Determine scroll direction
             const deltaY = Math.abs(event.deltaY) > threshold ? event.deltaY : 0;
             const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0;
+            // preventDefault if scroll by config axis
+            if ((vertical.value && deltaY >= deltaX)
+                || (!vertical.value && deltaY <= deltaX)) {
+                event.preventDefault();
+            }
             // If neither delta exceeds the threshold, don't navigate
             if (deltaY === 0 && deltaX === 0) {
                 return;

@@ -1,9 +1,9 @@
 /**
  * Vue 3 Carousel 0.15.0
- * (c) 2025
+ * (c) 2026
  * @license MIT
  */
-import { shallowReactive, cloneVNode, defineComponent, inject, h, reactive, ref, computed, watch, watchEffect, onMounted, onBeforeUnmount, provide, toRefs, useId, getCurrentInstance, onUnmounted, onUpdated } from 'vue';
+import { shallowReactive, cloneVNode, defineComponent, inject, h, reactive, ref, computed, watch, watchEffect, onMounted, onBeforeUnmount, provide, toRefs, getCurrentInstance, onUnmounted, onUpdated, useId } from 'vue';
 
 const BREAKPOINT_MODE_OPTIONS = ['viewport', 'carousel'];
 const DIR_MAP = {
@@ -467,7 +467,6 @@ function useWheel(options) {
     });
     const handleScroll = (event) => {
         var _a, _b;
-        event.preventDefault();
         if (!config.mouseWheel || sliding.value) {
             return;
         }
@@ -478,6 +477,11 @@ function useWheel(options) {
         // Determine scroll direction
         const deltaY = Math.abs(event.deltaY) > threshold ? event.deltaY : 0;
         const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0;
+        // preventDefault if scroll by config axis
+        if ((vertical.value && deltaY >= deltaX)
+            || (!vertical.value && deltaY <= deltaX)) {
+            event.preventDefault();
+        }
         // If neither delta exceeds the threshold, don't navigate
         if (deltaY === 0 && deltaX === 0) {
             return;
