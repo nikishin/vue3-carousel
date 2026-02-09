@@ -47,7 +47,7 @@ export function useWheel(options: UseWheelOptions) {
     console.log('Z', vertical.value, deltaY >= deltaX)
 
     // preventDefault if scroll by config axis
-    if ((vertical.value && deltaY >= deltaX) || (!vertical.value && deltaY <= deltaX)) {
+    if ((!vertical.value && deltaY >= deltaX) || (vertical.value && deltaY <= deltaX)) {
       event.preventDefault()
     }
 
