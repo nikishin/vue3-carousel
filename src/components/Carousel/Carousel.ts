@@ -441,6 +441,9 @@ export const Carousel = defineComponent({
     })
 
     const onWheel = ({ deltaX, deltaY, isScrollingForward }: WheelEventData) => {
+      // eslint-disable-next-line no-console
+      console.log('onWhell', deltaX, deltaY, isScrollingForward)
+
       emit('wheel', { deltaX, deltaY })
 
       if (isScrollingForward) {
