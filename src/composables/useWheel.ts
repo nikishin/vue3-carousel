@@ -44,23 +44,25 @@ export function useWheel(options: UseWheelOptions) {
     const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0
 
     // eslint-disable-next-line no-console
-    console.log('Z', vertical.value, Math.abs(deltaY) >= Math.abs(deltaX))
+    console.log('Z', vertical.value, Math.abs(deltaY), Math.abs(deltaX))
 
     // preventDefault if scroll by config axis
     if (
-      (!vertical.value && Math.abs(deltaY) >= Math.abs(deltaX)) ||
-      (vertical.value && Math.abs(deltaY) <= Math.abs(deltaX))
+      (vertical.value && Math.abs(deltaY) < Math.abs(deltaX)) ||
+      (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX))
     ) {
       // eslint-disable-next-line no-console
-      console.log('prevDefault', { deltaX, deltaY })
-      event.preventDefault()
+      console.log('axis.stop', { deltaX, deltaY })
+      return
     }
+
+    // eslint-disable-next-line no-console
+    console.log('whell.go', { deltaX, deltaY })
+
+    event.preventDefault()
 
     // If neither delta exceeds the threshold, don't navigate
     if (deltaY === 0 && deltaX === 0) {
-      // eslint-disable-next-line no-console
-      console.log('empty', { deltaX, deltaY })
-      event.preventDefault()
       return
     }
 
@@ -74,8 +76,6 @@ export function useWheel(options: UseWheelOptions) {
     // Positive delta means scrolling down/right
     const isScrollingForward = effectiveDelta > 0
 
-    // eslint-disable-next-line no-console
-    console.log('whell', { deltaX, deltaY })
     options.onWheel?.({ deltaX, deltaY, isScrollingForward })
   }
 
