@@ -482,19 +482,19 @@
             const deltaY = Math.abs(event.deltaY) > threshold ? event.deltaY : 0;
             const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0;
             // eslint-disable-next-line no-console
-            console.log('Z', vertical.value, Math.abs(deltaY) >= Math.abs(deltaX));
+            console.log('Z', vertical.value, Math.abs(deltaY), Math.abs(deltaX));
             // preventDefault if scroll by config axis
-            if ((!vertical.value && Math.abs(deltaY) >= Math.abs(deltaX)) ||
-                (vertical.value && Math.abs(deltaY) <= Math.abs(deltaX))) {
+            if ((vertical.value && Math.abs(deltaY) < Math.abs(deltaX)) ||
+                (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX))) {
                 // eslint-disable-next-line no-console
-                console.log('prevDefault', { deltaX, deltaY });
-                event.preventDefault();
+                console.log('axis.stop', { deltaX, deltaY });
+                return;
             }
+            // eslint-disable-next-line no-console
+            console.log('whell.go', { deltaX, deltaY });
+            event.preventDefault();
             // If neither delta exceeds the threshold, don't navigate
             if (deltaY === 0 && deltaX === 0) {
-                // eslint-disable-next-line no-console
-                console.log('empty', { deltaX, deltaY });
-                event.preventDefault();
                 return;
             }
             // Determine primary delta based on carousel orientation
@@ -503,8 +503,6 @@
             const effectiveDelta = primaryDelta !== 0 ? primaryDelta : vertical.value ? deltaX : deltaY;
             // Positive delta means scrolling down/right
             const isScrollingForward = effectiveDelta > 0;
-            // eslint-disable-next-line no-console
-            console.log('whell', { deltaX, deltaY });
             (_b = options.onWheel) === null || _b === void 0 ? void 0 : _b.call(options, { deltaX, deltaY, isScrollingForward });
         };
         return {
