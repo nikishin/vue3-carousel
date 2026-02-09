@@ -46,11 +46,16 @@ export function useWheel(options: UseWheelOptions) {
     // eslint-disable-next-line no-console
     console.log('Z', vertical.value, Math.abs(deltaY), Math.abs(deltaX))
 
+    // If neither delta exceeds the threshold, don't navigate
+    if (deltaY === 0 && deltaX === 0) {
+      event.preventDefault()
+      return
+    }
+
     // preventDefault if scroll by config axis
     if (
       (vertical.value && Math.abs(deltaY) < Math.abs(deltaX)) ||
-      (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX)) ||
-      (deltaY === 0 && deltaX === 0)
+      (!vertical.value && Math.abs(deltaY) > Math.abs(deltaX))
     ) {
       // eslint-disable-next-line no-console
       console.log('axis.stop', { deltaX, deltaY })
@@ -61,11 +66,6 @@ export function useWheel(options: UseWheelOptions) {
     console.log('wheel.go', { deltaX, deltaY })
 
     event.preventDefault()
-
-    // If neither delta exceeds the threshold, don't navigate
-    if (deltaY === 0 && deltaX === 0) {
-      return
-    }
 
     // Determine primary delta based on carousel orientation
     const primaryDelta = vertical.value ? deltaY : deltaX
