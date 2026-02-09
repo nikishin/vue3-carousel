@@ -498,10 +498,11 @@ function useWheel(options) {
         event.preventDefault();
         // Determine primary delta based on carousel orientation
         const primaryDelta = vertical.value ? deltaY : deltaX;
-        // If primaryDelta is 0, use the other delta as fallback
-        const effectiveDelta = primaryDelta !== 0 ? primaryDelta : vertical.value ? deltaX : deltaY;
+        // // If primaryDelta is 0, use the other delta as fallback
+        // const effectiveDelta =
+        //   primaryDelta !== 0 ? primaryDelta : vertical.value ? deltaX : deltaY
         // Positive delta means scrolling down/right
-        const isScrollingForward = effectiveDelta > 0;
+        const isScrollingForward = Math.abs(primaryDelta) > 0;
         (_b = options.onWheel) === null || _b === void 0 ? void 0 : _b.call(options, { deltaX, deltaY, isScrollingForward });
     };
     return {
