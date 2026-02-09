@@ -480,9 +480,10 @@ function useWheel(options) {
         const deltaY = Math.abs(event.deltaY) > threshold ? event.deltaY : 0;
         const deltaX = Math.abs(event.deltaX) > threshold ? event.deltaX : 0;
         // eslint-disable-next-line no-console
-        console.log('Z', vertical.value, deltaY >= deltaX);
+        console.log('Z', vertical.value, Math.abs(deltaY) >= Math.abs(deltaX));
         // preventDefault if scroll by config axis
-        if ((!vertical.value && deltaY >= deltaX) || (vertical.value && deltaY <= deltaX)) {
+        if ((!vertical.value && Math.abs(deltaY) >= Math.abs(deltaX)) ||
+            (vertical.value && Math.abs(deltaY) <= Math.abs(deltaX))) {
             event.preventDefault();
         }
         // If neither delta exceeds the threshold, don't navigate
